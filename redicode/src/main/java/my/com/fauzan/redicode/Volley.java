@@ -26,7 +26,7 @@ public class Volley {
     private String url;
     private JSONObject jsonObjectReq;
     private int timeout = 30000;
-    private final String TAG = Volley.class.getSimpleName();
+    public final String TAG = Volley.class.getSimpleName();
 
     public Volley(Context c, String url) {
         this.context = c;
