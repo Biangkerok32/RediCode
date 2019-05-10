@@ -16,6 +16,7 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
+
 import org.json.JSONObject;
 
 public class Volley {
@@ -25,6 +26,7 @@ public class Volley {
     private String url;
     private JSONObject jsonObjectReq;
     private int timeout = 30000;
+    private final String TAG = Volley.class.getSimpleName();
 
     public Volley(Context c, String url) {
         this.context = c;
@@ -125,12 +127,12 @@ public class Volley {
     }
 
     public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? context.getClass().getSimpleName() : tag);
+        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         getRequestQueue().add(req);
     }
 
     public <T> void addToRequestQueue(Request<T> req) {
-        req.setTag(context.getClass().getSimpleName());
+        req.setTag(TAG);
 
         // Set API response time to 30s
         req.setRetryPolicy(new DefaultRetryPolicy(
