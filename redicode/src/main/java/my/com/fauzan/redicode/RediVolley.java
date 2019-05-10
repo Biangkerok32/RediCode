@@ -19,33 +19,33 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.json.JSONObject;
 
-public class Volley {
+public class RediVolley {
 
     private Context context;
     private RequestQueue mRequestQueue;
     private String url;
     private JSONObject jsonObjectReq;
     private int timeout = 30000;
-    public final String TAG = Volley.class.getSimpleName();
+    public final String TAG = RediVolley.class.getSimpleName();
 
-    public Volley(Context c, String url) {
+    public RediVolley(Context c, String url) {
         this.context = c;
         this.url = url;
     }
 
-    public Volley(Context c, String url, int timeout) {
+    public RediVolley(Context c, String url, int timeout) {
         this.context = c;
         this.url = url;
         this.timeout = timeout;
     }
 
-    public Volley(Context c, String url, JSONObject reqParams) {
+    public RediVolley(Context c, String url, JSONObject reqParams) {
         this.context = c;
         this.url = url;
         this.jsonObjectReq = reqParams;
     }
 
-    public Volley(Context c, String url, JSONObject reqParams, int timeout) {
+    public RediVolley(Context c, String url, JSONObject reqParams, int timeout) {
         this.context = c;
         this.url = url;
         this.jsonObjectReq = reqParams;
@@ -54,7 +54,7 @@ public class Volley {
 
 
 
-    public void setOnResponseListener(final View.OnResponseListener onResponseListener){
+    public void setOnResponseListener(final RediView.OnResponseListener onResponseListener){
         if (Util.hasPermission(context, Manifest.permission.ACCESS_NETWORK_STATE) &&
                 Util.hasPermission(context, Manifest.permission.INTERNET)){
             if (NetworkUtil.isNetworkConnected(context)){

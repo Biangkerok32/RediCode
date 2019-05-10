@@ -5,10 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import my.com.fauzan.redicode.NetworkUtil;
-import my.com.fauzan.redicode.SSLSocketClient;
-import my.com.fauzan.redicode.View;
-import my.com.fauzan.redicode.Volley;
+import my.com.fauzan.redicode.RediVolley;
+import my.com.fauzan.redicode.RediSSLSocketClient;
+import my.com.fauzan.redicode.RediView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,16 +19,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Restful API - default timeout 30000
-        Volley volley = new Volley(this, "https://reqres.in/api/products/3");
+        RediVolley rediVolley = new RediVolley(this, "https://reqres.in/api/products/3");
 
         // Restful API - with request object
-        //  Volley volley = new Volley(this, "https://reqres.in/api/products/3", reqObject);
+        //  RediVolley rediVolley = new RediVolley(this, "https://reqres.in/api/products/3", reqObject);
 
 
         // Restful API - custom timeout
-        // Volley volley = new Volley(this, "https://reqres.in/api/products/3", reqObject, 45000 );
+        // RediVolley rediVolley = new RediVolley(this, "https://reqres.in/api/products/3", reqObject, 45000 );
 
-        volley.setOnResponseListener(new View.OnResponseListener() {
+        rediVolley.setOnResponseListener(new RediView.OnResponseListener() {
             @Override
             public void onStart() {
 
@@ -52,13 +51,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // Stop volley request
-        volley.cancelPendingRequests(this);
+        // Stop rediVolley request
+        rediVolley.cancelPendingRequests(this);
 
         // SSL Socket with default timeout - 30000;
         // Cert file must be in Raw Folder
-        SSLSocketClient sslSocketClient = new SSLSocketClient(this,"100.120.280.123",1111, 1312);
-        SSLSocketClient.SSLOperation sslOperation = sslSocketClient.execute("12312319081290389120832190830", new View.OnResponseListener() {
+        RediSSLSocketClient rediSslSocketClient = new RediSSLSocketClient(this,"100.120.280.123",1111, 1312);
+        RediSSLSocketClient.SSLAsyncTask sslAsyncTask = rediSslSocketClient.setOnResponseListener("12312319081290389120832190830", new RediView.OnResponseListener() {
             @Override
             public void onStart() {
 
@@ -81,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         })
 
         // Stop SSL Request
-        if (sslOperation !=null && sslOperation.getStatus() != AsyncTask.Status.FINISHED)
-            sslOperation.cancel(true);
+        if (sslAsyncTask !=null && sslAsyncTask.getStatus() != AsyncTask.Status.FINISHED)
+            sslAsyncTask.cancel(true);
     }
 }

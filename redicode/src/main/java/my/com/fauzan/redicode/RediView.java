@@ -1,6 +1,6 @@
 package my.com.fauzan.redicode;
 
-public class View {
+public class RediView {
 
     public interface OnResponseListener{
         void onStart();

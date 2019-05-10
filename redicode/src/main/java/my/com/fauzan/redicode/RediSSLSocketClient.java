@@ -24,9 +24,9 @@ import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
-public class SSLSocketClient {
+public class RediSSLSocketClient {
 
-    private final String TAG = SSLOperation.class.getSimpleName();
+    private final String TAG = SSLAsyncTask.class.getSimpleName();
 
     private String dstAddress;
     private int dstPort;
@@ -37,17 +37,17 @@ public class SSLSocketClient {
     private SSLSocket socket = null;
 
     private Context context;
-    private View.OnResponseListener onResponseListener;
+    private RediView.OnResponseListener onResponseListener;
     private int certFile;
 
-    public SSLSocketClient(Context context, String dstAddress, int dstPort, int certFile) {
+    public RediSSLSocketClient(Context context, String dstAddress, int dstPort, int certFile) {
         this.context = context;
         this.dstAddress = dstAddress;
         this.dstPort = dstPort;
         this.certFile = certFile;
     }
 
-    public SSLSocketClient(Context context, String dstAddress, int dstPort, int certFile, int timeout) {
+    public RediSSLSocketClient(Context context, String dstAddress, int dstPort, int certFile, int timeout) {
         this.context = context;
         this.dstAddress = dstAddress;
         this.dstPort = dstPort;
@@ -57,10 +57,10 @@ public class SSLSocketClient {
     }
 
 
-    public SSLOperation execute(String request, View.OnResponseListener onResponseListener){
+    public SSLAsyncTask setOnResponseListener(String request, RediView.OnResponseListener onResponseListener){
         this.onResponseListener = onResponseListener;
         if (NetworkUtil.isNetworkConnected(context))
-            return (SSLOperation) new SSLOperation().execute(request);
+            return (SSLAsyncTask) new SSLAsyncTask().execute(request);
         else
             this.onResponseListener.onNetworkError();
 
@@ -70,7 +70,7 @@ public class SSLSocketClient {
     ////////////////////////
     ////// SSL Socket //////
     ////////////////////////
-    public class SSLOperation extends AsyncTask<String, Void, String> {
+    public class SSLAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
