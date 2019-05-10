@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Redicode</string>
+
+    <!--Connection Alert-->
+    <string name="error_network">No Internet Connection! Please Check Your Internet Connection.</string>
+    <string name="error_server">The server could not be found. Please try again after some time.</string>
+    <string name="error_auth">The server could not be found. Please try again after some time.</string>
+    <string name="error_parse">Parsing error! Please try again after some time.</string>
+    <string name="error_timeout">Connection timeout! Please check your internet connection.</string>
+</resources>
