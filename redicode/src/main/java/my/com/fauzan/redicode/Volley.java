@@ -116,7 +116,7 @@ public class Volley {
         return false;
     }
 
-    private RequestQueue getRequestQueue() {
+    public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
             mRequestQueue = com.android.volley.toolbox.Volley.newRequestQueue(context.getApplicationContext());
         }
