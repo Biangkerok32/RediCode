@@ -89,7 +89,7 @@ public class Volley {
                     }
                 });
 
-                addToRequestQueue(jsonObjReq, context.getClass().getSimpleName());
+                addToRequestQueue(jsonObjReq);
             } else {
                 onExecute.onNetworkError();
             }
