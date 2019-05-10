@@ -7,6 +7,7 @@ import android.util.Log;
 
 import my.com.fauzan.redicode.NetworkUtil;
 import my.com.fauzan.redicode.SSLSocketClient;
+import my.com.fauzan.redicode.View;
 import my.com.fauzan.redicode.Volley;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         // Restful API - custom timeout
         // Volley volley = new Volley(this, "https://reqres.in/api/products/3", reqObject, 45000 );
 
-        volley.execute(new Volley.OnExecute() {
+        volley.setOnResponseListener(new View.OnResponseListener() {
             @Override
             public void onStart() {
 
@@ -42,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 Log.e(TAG, "onError: " + error );
-
             }
 
             @Override
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onNetworkError: " + getString(R.string.error_network));
             }
         });
+
 
         // Stop volley request
         volley.cancelPendingRequests(this);
@@ -57,28 +58,27 @@ public class MainActivity extends AppCompatActivity {
         // SSL Socket with default timeout - 30000;
         // Cert file must be in Raw Folder
         SSLSocketClient sslSocketClient = new SSLSocketClient(this,"100.120.280.123",1111, 1312);
-        SSLSocketClient.SSLOperation sslOperation = sslSocketClient.execute("", new SSLSocketClient.OnExecute() {
+        SSLSocketClient.SSLOperation sslOperation = sslSocketClient.execute("12312319081290389120832190830", new View.OnResponseListener() {
             @Override
             public void onStart() {
 
             }
 
             @Override
-            public void onComplete(byte[] response) {
-                Log.e(TAG, "onComplete: "+ new String(response));
+            public void onComplete(String result) {
 
             }
 
             @Override
             public void onError(String error) {
-                Log.e(TAG, "onError: "+error );
+
             }
 
             @Override
             public void onNetworkError() {
-                Log.e(TAG, "onNetworkError: " + getString(R.string.error_network));
+
             }
-        });
+        })
 
         // Stop SSL Request
         if (sslOperation !=null && sslOperation.getStatus() != AsyncTask.Status.FINISHED)

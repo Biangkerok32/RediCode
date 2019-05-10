@@ -37,7 +37,7 @@ public class SSLSocketClient {
     private SSLSocket socket = null;
 
     private Context context;
-    private OnExecute listener;
+    private View.OnResponseListener onResponseListener;
     private int certFile;
 
     public SSLSocketClient(Context context, String dstAddress, int dstPort, int certFile) {
@@ -56,19 +56,13 @@ public class SSLSocketClient {
 
     }
 
-    public interface OnExecute{
-        void onStart();
-        void onComplete(byte[] response);
-        void onError(String error);
-        void onNetworkError();
-    }
 
-    public SSLOperation execute(String request, OnExecute onExecute){
-        this.listener = onExecute;
+    public SSLOperation execute(String request, View.OnResponseListener onResponseListener){
+        this.onResponseListener = onResponseListener;
         if (NetworkUtil.isNetworkConnected(context))
             return (SSLOperation) new SSLOperation().execute(request);
         else
-            this.listener.onNetworkError();
+            this.onResponseListener.onNetworkError();
 
         return null;
     }
@@ -246,16 +240,16 @@ public class SSLSocketClient {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            listener.onStart();
+            onResponseListener.onStart();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (success)
-                listener.onComplete(response);
+                onResponseListener.onComplete(new String(response));
             else
-                listener.onError(new String(response));
+                onResponseListener.onError(new String(response));
         }
     }
 }

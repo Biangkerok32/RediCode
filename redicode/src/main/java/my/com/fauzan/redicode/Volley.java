@@ -54,19 +54,19 @@ public class Volley {
 
 
 
-    public void execute(final OnExecute onExecute){
+    public void setOnResponseListener(final View.OnResponseListener onResponseListener){
         if (Util.hasPermission(context, Manifest.permission.ACCESS_NETWORK_STATE) &&
                 Util.hasPermission(context, Manifest.permission.INTERNET)){
             if (NetworkUtil.isNetworkConnected(context)){
 
-                onExecute.onStart();
+                onResponseListener.onStart();
 
                 JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                         url, jsonObjectReq, new com.android.volley.Response.Listener<JSONObject>() {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        onExecute.onComplete(response.toString());
+                        onResponseListener.onComplete(response.toString());
                     }
                 }, new com.android.volley.Response.ErrorListener() {
 
@@ -74,18 +74,18 @@ public class Volley {
                     public void onErrorResponse(VolleyError error) {
 
                         if (error.getMessage() != null)
-                            onExecute.onError(error.getMessage());
+                            onResponseListener.onError(error.getMessage());
                         else {
                             if (error instanceof NetworkError) {
-                                onExecute.onError(context.getString(R.string.error_network));
+                                onResponseListener.onError(context.getString(R.string.error_network));
                             } else if (error instanceof ServerError) {
-                                onExecute.onError(context.getString(R.string.error_server));
+                                onResponseListener.onError(context.getString(R.string.error_server));
                             } else if (error instanceof AuthFailureError) {
-                                onExecute.onError(context.getString(R.string.error_auth));
+                                onResponseListener.onError(context.getString(R.string.error_auth));
                             } else if (error instanceof ParseError) {
-                                onExecute.onError(context.getString(R.string.error_parse));
+                                onResponseListener.onError(context.getString(R.string.error_parse));
                             } else if (error instanceof TimeoutError) {
-                                onExecute.onError(context.getString(R.string.error_timeout));
+                                onResponseListener.onError(context.getString(R.string.error_timeout));
                             }
                         }
                     }
@@ -93,19 +93,13 @@ public class Volley {
 
                 addToRequestQueue(jsonObjReq);
             } else {
-                onExecute.onNetworkError();
+                onResponseListener.onNetworkError();
             }
         } else {
-            onExecute.onError("Missing ACCESS_NETWORK_STATE and INTERNET permissions in Manifest file");
+            onResponseListener.onError("Missing ACCESS_NETWORK_STATE and INTERNET permissions in Manifest file");
         }
     }
 
-    public interface OnExecute{
-        void onStart();
-        void onComplete(String result);
-        void onError(String error);
-        void onNetworkError();
-    }
 
     @SuppressLint("PrivateApi")
     private boolean hasVolleyClasspath() {
