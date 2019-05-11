@@ -2,7 +2,6 @@ package my.com.fauzan.redicode;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
@@ -11,7 +10,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
-import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -39,7 +37,7 @@ public class RediSSLSocketClient {
     private SSLSocket socket = null;
 
     private Context context;
-    private RediView.OnResponseListener onResponseListener;
+    private RediView.OnByteResponseListener onByteResponseListener;
     private int certFile;
 
     public RediSSLSocketClient(Context context, String dstAddress, int dstPort, int certFile) {
@@ -59,12 +57,12 @@ public class RediSSLSocketClient {
     }
 
 
-    public SSLAsyncTask setOnResponseListener(String request, RediView.OnResponseListener onResponseListener){
-        this.onResponseListener = onResponseListener;
+    public SSLAsyncTask setOnResponseListener(String request, RediView.OnByteResponseListener onByteResponseListener){
+        this.onByteResponseListener = onByteResponseListener;
         if (NetworkUtil.isNetworkConnected(context))
             return (SSLAsyncTask) new SSLAsyncTask().execute(request);
         else
-            this.onResponseListener.onNetworkError();
+            this.onByteResponseListener.onNetworkError();
 
         return null;
     }
@@ -242,21 +240,16 @@ public class RediSSLSocketClient {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            onResponseListener.onStart();
+            onByteResponseListener.onStart();
         }
 
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (success) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    onResponseListener.onComplete(new String(response, StandardCharsets.UTF_8));
-                }
-            } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    onResponseListener.onError(new String(response, StandardCharsets.UTF_8));
-                }
-            }
+            if (success)
+                onByteResponseListener.onComplete(response);
+            else
+                onByteResponseListener.onError(response);
         }
     }
 }

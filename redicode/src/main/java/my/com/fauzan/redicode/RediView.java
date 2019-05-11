@@ -8,4 +8,11 @@ public class RediView {
         void onError(String error);
         void onNetworkError();
     }
+
+    public interface OnByteResponseListener{
+        void onStart();
+        void onComplete(byte[] result);
+        void onError(byte[] error);
+        void onNetworkError();
+    }
 }
