@@ -2,6 +2,7 @@ package my.com.fauzan.redicode;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.SocketTimeoutException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStore;
 import java.security.KeyStoreException;
@@ -246,10 +248,15 @@ public class RediSSLSocketClient {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (success)
-                onResponseListener.onComplete(new String(response));
-            else
-                onResponseListener.onError(new String(response));
+            if (success) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    onResponseListener.onComplete(new String(response, StandardCharsets.UTF_8));
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                    onResponseListener.onError(new String(response, StandardCharsets.UTF_8));
+                }
+            }
         }
     }
 }
