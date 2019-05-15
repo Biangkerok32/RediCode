@@ -11,6 +11,15 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        buildTypes.each {
+            it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', UAT_ADDRESS
+        }
+        debug {
+            buildConfigField 'String', "Address", UAT_ADDRESS  // use in code
+            buildConfigField 'int', "Port", UAT_PORT// use in code
+            buildConfigField 'String', "Request", UAT_REQUEST // use in code
+            resValue 'string', "api_key", UAT_ADDRESS // use in xml
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

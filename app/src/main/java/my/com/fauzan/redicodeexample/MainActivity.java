@@ -1,6 +1,5 @@
 package my.com.fauzan.redicodeexample;
 
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Restful API - custom timeout
         // RediVolley rediVolley = new RediVolley(this, "https://reqres.in/api/products/3", reqObject, 45000 );
+
 
         rediVolley.setOnResponseListener(new RediView.OnResponseListener() {
             @Override
@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
 
         // SSL Socket with default timeout - 30000;
         // Cert file must be in Raw Folder
-        RediSSLSocketClient rediSslSocketClient = new RediSSLSocketClient(this,"100.120.280.123",1111, 1312);
-        RediSSLSocketClient.SSLAsyncTask sslAsyncTask = rediSslSocketClient.setOnResponseListener("12312319081290389120832190830", new RediView.OnByteResponseListener() {
+        RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.Address, BuildConfig.Port, R.raw.certificate);
+        RediSSLSocketClient.SSLAsyncTask.setOnByteResponseListener(new RediView.OnByteResponseListener() {
             @Override
             public void onStart() {
 
@@ -65,22 +65,26 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(byte[] result) {
-
+                Log.e(TAG, "onSuccess: " + new String(result) );
             }
 
             @Override
             public void onFailure(byte[] error) {
+                Log.e(TAG, "onFailure: " + new String(error) );
 
             }
 
             @Override
             public void onNetworkFailure() {
-
+                Log.e(TAG, "onNetworkFailure: ");
             }
-    });
+        });
+
+        RediSSLSocketClient.SSLAsyncTask sslTest = (RediSSLSocketClient.SSLAsyncTask) new RediSSLSocketClient.SSLAsyncTask().execute(BuildConfig.Request);
+
 
         // Stop SSL Request
-        if (sslAsyncTask !=null && sslAsyncTask.getStatus() != AsyncTask.Status.FINISHED)
-            sslAsyncTask.cancel(true);
+//        if (sslTest !=null && sslTest.getStatus() != AsyncTask.Status.FINISHED)
+//            sslTest.cancel(true);
     }
 }

@@ -13,6 +13,8 @@
 .externalNativeBuild
 /.idea/misc.xml
 
+certificate.pem
+
 # Built application files
 *.apk
 *.ap_
