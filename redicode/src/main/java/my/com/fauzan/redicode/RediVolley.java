@@ -66,7 +66,7 @@ public class RediVolley {
 
                     @Override
                     public void onResponse(JSONObject response) {
-                        onResponseListener.onComplete(response.toString());
+                        onResponseListener.onSuccess(response.toString());
                     }
                 }, new com.android.volley.Response.ErrorListener() {
 
@@ -74,18 +74,18 @@ public class RediVolley {
                     public void onErrorResponse(VolleyError error) {
 
                         if (error.getMessage() != null)
-                            onResponseListener.onError(error.getMessage());
+                            onResponseListener.onFailure(error.getMessage());
                         else {
                             if (error instanceof NetworkError) {
-                                onResponseListener.onError(context.getString(R.string.error_network));
+                                onResponseListener.onFailure(context.getString(R.string.error_network));
                             } else if (error instanceof ServerError) {
-                                onResponseListener.onError(context.getString(R.string.error_server));
+                                onResponseListener.onFailure(context.getString(R.string.error_server));
                             } else if (error instanceof AuthFailureError) {
-                                onResponseListener.onError(context.getString(R.string.error_auth));
+                                onResponseListener.onFailure(context.getString(R.string.error_auth));
                             } else if (error instanceof ParseError) {
-                                onResponseListener.onError(context.getString(R.string.error_parse));
+                                onResponseListener.onFailure(context.getString(R.string.error_parse));
                             } else if (error instanceof TimeoutError) {
-                                onResponseListener.onError(context.getString(R.string.error_timeout));
+                                onResponseListener.onFailure(context.getString(R.string.error_timeout));
                             }
                         }
                     }
@@ -93,10 +93,10 @@ public class RediVolley {
 
                 addToRequestQueue(jsonObjReq);
             } else {
-                onResponseListener.onNetworkError();
+                onResponseListener.onNetworkFailure();
             }
         } else {
-            onResponseListener.onError("Missing ACCESS_NETWORK_STATE and INTERNET permissions in Manifest file");
+            onResponseListener.onFailure("Missing ACCESS_NETWORK_STATE and INTERNET permissions in Manifest file");
         }
     }
 

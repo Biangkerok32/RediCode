@@ -35,18 +35,18 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onComplete(String result) {
-                Log.d(TAG, "onComplete: "+result);
+            public void onSuccess(String result) {
+                Log.d(TAG, "onSuccess: "+result);
             }
 
             @Override
-            public void onError(String error) {
-                Log.e(TAG, "onError: " + error );
+            public void onFailure(String error) {
+                Log.e(TAG, "onFailure: " + error );
             }
 
             @Override
-            public void onNetworkError() {
-                Log.e(TAG, "onNetworkError: " + getString(R.string.error_network));
+            public void onNetworkFailure() {
+                Log.e(TAG, "onNetworkFailure: " + getString(R.string.error_network));
             }
         });
 
@@ -64,17 +64,17 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onComplete(String result) {
+            public void onSuccess(String result) {
 
             }
 
             @Override
-            public void onError(String error) {
+            public void onFailure(String error) {
 
             }
 
             @Override
-            public void onNetworkError() {
+            public void onNetworkFailure() {
 
             }
         })

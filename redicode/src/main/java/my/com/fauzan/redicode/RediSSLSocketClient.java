@@ -62,7 +62,7 @@ public class RediSSLSocketClient {
         if (NetworkUtil.isNetworkConnected(context))
             return (SSLAsyncTask) new SSLAsyncTask().execute(request);
         else
-            this.onByteResponseListener.onNetworkError();
+            this.onByteResponseListener.onNetworkFailure();
 
         return null;
     }
@@ -247,9 +247,9 @@ public class RediSSLSocketClient {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (success)
-                onByteResponseListener.onComplete(response);
+                onByteResponseListener.onSuccess(response);
             else
-                onByteResponseListener.onError(response);
+                onByteResponseListener.onFailure(response);
         }
     }
 }

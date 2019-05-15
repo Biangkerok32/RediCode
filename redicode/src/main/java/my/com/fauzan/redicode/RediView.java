@@ -4,15 +4,15 @@ public class RediView {
 
     public interface OnResponseListener{
         void onStart();
-        void onComplete(String result);
-        void onError(String error);
-        void onNetworkError();
+        void onSuccess(String result);
+        void onFailure(String error);
+        void onNetworkFailure();
     }
 
     public interface OnByteResponseListener{
         void onStart();
-        void onComplete(byte[] result);
-        void onError(byte[] error);
-        void onNetworkError();
+        void onSuccess(byte[] result);
+        void onFailure(byte[] error);
+        void onNetworkFailure();
     }
 }
