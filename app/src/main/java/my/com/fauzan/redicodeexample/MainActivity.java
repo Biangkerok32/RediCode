@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         // SSL Socket with default timeout - 30000;
         // Cert file must be in Raw Folder
         RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.Address, BuildConfig.Port, R.raw.certificate);
-        RediSSLSocketClient.SSLAsyncTask.setOnByteResponseListener(new RediView.OnByteResponseListener() {
+        RediSSLSocketClient.setOnResponseListener(BuildConfig.Request, new RediView.OnByteResponseListener() {
             @Override
             public void onStart() {
 
@@ -71,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFailure(byte[] error) {
                 Log.e(TAG, "onFailure: " + new String(error) );
-
             }
 
             @Override
@@ -79,9 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onNetworkFailure: ");
             }
         });
-
-        RediSSLSocketClient.SSLAsyncTask sslTest = (RediSSLSocketClient.SSLAsyncTask) new RediSSLSocketClient.SSLAsyncTask().execute(BuildConfig.Request);
-
 
         // Stop SSL Request
 //        if (sslTest !=null && sslTest.getStatus() != AsyncTask.Status.FINISHED)

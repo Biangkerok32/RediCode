@@ -39,6 +39,7 @@ public class RediSSLSocketClient {
     private Context context;
     private RediView.OnByteResponseListener onByteResponseListener;
     private int certFile;
+    private SSLAsyncTask sslAsyncTask;
     private static RediSSLSocketClient mInstance;
 
     public static synchronized RediSSLSocketClient getInstance(Context context) {
@@ -59,44 +60,25 @@ public class RediSSLSocketClient {
         this.certFile = certFile;
     }
 
-    public RediSSLSocketClient(Context context, String dstAddress, int dstPort, int certFile) {
-        this.context = context;
-        this.dstAddress = dstAddress;
-        this.dstPort = dstPort;
-        this.certFile = certFile;
-    }
-
-
-
-    public RediSSLSocketClient(Context context, String dstAddress, int dstPort, int certFile, int timeout) {
-        this.context = context;
+    public void initSSL(String dstAddress, int dstPort, int certFile, int timeout) {
         this.dstAddress = dstAddress;
         this.dstPort = dstPort;
         this.certFile = certFile;
         this.timeout = timeout;
-
     }
 
 
-//    public static SSLAsyncTask setOnResponseListener(String request, RediView.OnByteResponseListener onByteResponseListener){
-//        mInstance.onByteResponseListener
-//        this.onByteResponseListener = onByteResponseListener;
-//        if (NetworkUtil.isNetworkConnected(mInstance.context))
-//            return (SSLAsyncTask) new SSLAsyncTask().execute(request);
-//        else
-//            this.onByteResponseListener.onNetworkFailure();
-//
-//        return null;
-//    }
+    public static void setOnResponseListener(String request, RediView.OnByteResponseListener onByteResponseListener){
+        mInstance.onByteResponseListener = onByteResponseListener;
+        mInstance.sslAsyncTask = (SSLAsyncTask) new SSLAsyncTask().execute(request);
+    }
 
-    ////////////////////////
-    ////// SSL Socket //////
-    ////////////////////////
-    public static class SSLAsyncTask extends AsyncTask<String, Void, String> {
+    public static void cancelRequest(){
+        if (mInstance.sslAsyncTask != null)
+            mInstance.sslAsyncTask.cancel(true);
+    }
 
-        public static void setOnByteResponseListener(RediView.OnByteResponseListener onByteResponseListener){
-            mInstance.onByteResponseListener = onByteResponseListener;
-        }
+    private static class SSLAsyncTask extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
