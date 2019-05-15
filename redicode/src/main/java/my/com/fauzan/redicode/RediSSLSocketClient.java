@@ -74,7 +74,7 @@ public class RediSSLSocketClient {
     }
 
     public static void cancelRequest(){
-        if (mInstance.sslAsyncTask != null)
+        if (mInstance.sslAsyncTask != null && mInstance.sslAsyncTask.getStatus() != AsyncTask.Status.FINISHED)
             mInstance.sslAsyncTask.cancel(true);
     }
 
