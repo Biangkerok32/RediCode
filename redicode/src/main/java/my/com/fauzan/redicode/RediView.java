@@ -15,4 +15,11 @@ public class RediView {
         void onFailure(byte[] error);
         void onNetworkFailure();
     }
+
+    public interface OnLocationListener{
+        void onStart();
+        void onSuccess(double latitude, double longitude);
+        void onFailure(String error);
+        void onPermissionFailure();
+    }
 }
