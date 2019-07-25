@@ -1,4 +1,4 @@
-package my.com.fauzan.redicode;
+package my.com.fauzan.redicode.network;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -23,6 +23,9 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+
+import my.com.fauzan.redicode.BuildConfig;
+import my.com.fauzan.redicode.RediView;
 
 public class RediSSLSocketClient {
 

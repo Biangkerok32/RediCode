@@ -1,4 +1,4 @@
-package my.com.fauzan.redicode;
+package my.com.fauzan.redicode.network;
 
 import java.math.BigInteger;
 import java.util.Arrays;

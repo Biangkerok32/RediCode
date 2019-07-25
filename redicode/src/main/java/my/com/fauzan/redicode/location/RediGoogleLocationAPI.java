@@ -1,4 +1,4 @@
-package my.com.fauzan.redicode;
+package my.com.fauzan.redicode.location;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -7,9 +7,8 @@ import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.common.api.ApiException;
@@ -31,9 +30,12 @@ import com.google.android.gms.tasks.Task;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class RediLocation {
+import my.com.fauzan.redicode.RediView;
+import my.com.fauzan.redicode.Util;
 
-    private final String TAG = RediLocation.class.getSimpleName();
+public class RediGoogleLocationAPI {
+
+    private final String TAG = RediGoogleLocationAPI.class.getSimpleName();
 
     private Context context;
     private String latitude;
@@ -55,17 +57,17 @@ public class RediLocation {
     // than your app can handle
     private long FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = 5000;
 
-    public RediLocation(Context context){
+    public RediGoogleLocationAPI(Context context){
         this.context = context;
     }
 
-    public RediLocation(Context context, long setUpdateInterval, long setFastestUpdateInterval){
+    public RediGoogleLocationAPI(Context context, long setUpdateInterval, long setFastestUpdateInterval){
         this.context = context;
         this.UPDATE_INTERVAL_IN_MILLISECONDS = setUpdateInterval;
         this.FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS = setFastestUpdateInterval;
     }
 
-    public RediLocation(Context context, long timeout){
+    public RediGoogleLocationAPI(Context context, long timeout){
         this.context = context;
         this.timeout = timeout;
     }
@@ -81,8 +83,8 @@ public class RediLocation {
                 public void onLocationResult(LocationResult locationResult) {
                     super.onLocationResult(locationResult);
                     // location is received
-                    RediLocation.this.mCurrentLocation = locationResult.getLastLocation();
-                    onLocationListener.onSuccess(RediLocation.this.mCurrentLocation.getLatitude(), RediLocation.this.mCurrentLocation.getLongitude());
+                    RediGoogleLocationAPI.this.mCurrentLocation = locationResult.getLastLocation();
+                    onLocationListener.onSuccess(RediGoogleLocationAPI.this.mCurrentLocation.getLatitude(), RediGoogleLocationAPI.this.mCurrentLocation.getLongitude());
                 }
             };
 

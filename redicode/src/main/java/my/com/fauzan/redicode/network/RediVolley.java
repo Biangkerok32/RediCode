@@ -1,4 +1,4 @@
-package my.com.fauzan.redicode;
+package my.com.fauzan.redicode.network;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -18,6 +18,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 
 
 import org.json.JSONObject;
+
+import my.com.fauzan.redicode.R;
+import my.com.fauzan.redicode.RediView;
+import my.com.fauzan.redicode.Util;
 
 public class RediVolley {
 

@@ -1,12 +1,18 @@
 package my.com.fauzan.redicodeexample;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 
-import my.com.fauzan.redicode.RediLocation;
-import my.com.fauzan.redicode.RediVolley;
-import my.com.fauzan.redicode.RediSSLSocketClient;
+import java.util.ArrayList;
+import java.util.List;
+
+import my.com.fauzan.redicode.device_info.RediDeviceInfo;
+import my.com.fauzan.redicode.location.RediGoogleLocationAPI;
+import my.com.fauzan.redicode.location.RediAndroidLocationAPI;
+import my.com.fauzan.redicode.network.RediVolley;
+import my.com.fauzan.redicode.network.RediSSLSocketClient;
 import my.com.fauzan.redicode.RediView;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,7 +24,24 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        location();
+
+        androidLocationAPI();
+
+        // get serial no
+        RediDeviceInfo rediDeviceInfo = new RediDeviceInfo(this);
+        Log.e(TAG, "Serial No: " + rediDeviceInfo.getSerialNo() );
+        Log.e(TAG, "Mac Address: "+ rediDeviceInfo.getMacAddress() );
+        Log.e(TAG, "Device Imei: "+ rediDeviceInfo.getDeviceIMEI() );
+        Log.e(TAG, "Device ID: "+ rediDeviceInfo.getDeviceID() );
+
+        tester b = new tester();
+        List<tester> a = new ArrayList<>();
+        a.add(b);
+    }
+
+    class tester {
+
+
     }
 
     private void volley(){
@@ -92,9 +115,9 @@ public class MainActivity extends AppCompatActivity {
 //            sslTest.cancel(true);
     }
 
-    private void location (){
-        final RediLocation rediLocation = new RediLocation(this, 1);
-        rediLocation.startLocation(new RediView.OnLocationListener() {
+    private void googleLocationAPI (){
+        final RediGoogleLocationAPI rediGoogleLocationAPI = new RediGoogleLocationAPI(this, 1);
+        rediGoogleLocationAPI.startLocation(new RediView.OnLocationListener() {
             @Override
             public void onStart() {
 
@@ -105,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onSuccess: "+latitude);
                 Log.e(TAG, "onSuccess: "+longitude);
 
-                rediLocation.stopLocationUpdates();
+                rediGoogleLocationAPI.stopLocationUpdates();
 
             }
 
@@ -121,5 +144,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void androidLocationAPI(){
+        final RediAndroidLocationAPI androidLocationAPI = new RediAndroidLocationAPI(this);
+        androidLocationAPI.startLocation(new RediView.OnLocationListener() {
+            @Override
+            public void onStart() {
+                Log.e(TAG, "onStart: Start location" );
+
+            }
+
+            @Override
+            public void onSuccess(double latitude, double longitude) {
+                Log.e(TAG, "onSuccess: im here : " + latitude + ":" + longitude);
+
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+
+            @Override
+            public void onPermissionFailure() {
+                Log.e(TAG, "onPermissionFailure: Please enable permission");
+            }
+        });
     }
 }
