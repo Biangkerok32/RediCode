@@ -6,3 +6,7 @@ Currently supported API:
 2. Android Geo Location 
 3. Google Service Location
 4. Device Info
+
+
+# Link
+https://jitpack.io/#com.gitlab.MuhdFauzan/redicode
