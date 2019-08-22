@@ -10,7 +10,7 @@ Currently supported API:
 
 
 #### Usage
-Step 1. Add the JitPack repository to your build file
+**Step 1.** Add the JitPack repository to your build file
 
 ```
 allprojects {
@@ -22,7 +22,7 @@ allprojects {
 ```
 
 	
-Step 2. Add the dependency
+**Step 2.** Add the dependency
 
 ```
 dependencies {
