@@ -49,6 +49,7 @@ public class RediTextInputLayout extends TextInputLayout {
                 setLayoutParams(params);
                 setBoxBackgroundMode(TextInputLayout.BOX_BACKGROUND_OUTLINE);
                 setBoxCornerRadii(5, 5, 5, 5);
+                setBoxStrokeColor(typedArray.getColor(R.styleable.RediTextInputLayout_android_strokeColor, getContext().getResources().getColor(android.R.color.black)));
                 addView(rediTextInputEditText);
             } finally {
                 typedArray.recycle();

@@ -4,6 +4,7 @@
         <attr name="android:text" />
         <attr name="android:textColor" />
         <attr name="android:textSize" />
+        <attr name="android:strokeColor" format="color" />
         <attr name="android:textStyle" />
         <attr name="android:textColorHint" />
         <attr name="android:hint" />

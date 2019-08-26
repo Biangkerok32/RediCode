@@ -16,6 +16,12 @@
             android:hint="@string/app_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <my.com.fauzan.redicode.ui.RediTextInputLayout
+            android:hint="@string/app_name"
+            android:strokeColor="@android:color/holo_green_dark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
 </RelativeLayout>

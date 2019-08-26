@@ -10,6 +10,7 @@ import my.com.fauzan.redicode.R;
 
 public class RediTextInputEditText extends TextInputEditText {
 
+
     public RediTextInputEditText(Context context) {
         super(context);
     }
