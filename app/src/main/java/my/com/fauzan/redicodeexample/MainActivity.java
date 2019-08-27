@@ -34,15 +34,36 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "Device Imei: "+ rediDeviceInfo.getDeviceIMEI() );
         Log.e(TAG, "Device ID: "+ rediDeviceInfo.getDeviceID() );
 
-        tester b = new tester();
-        List<tester> a = new ArrayList<>();
-        a.add(b);
-    }
-
-    class tester {
-
+        test();
 
     }
+    private void test(){
+        RediVolley rediVolley = new RediVolley(this, "http://dummy.restapiexample.com/api/v1/employees");
+        rediVolley.setOnResponseListener(new RediView.OnResponseListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(String result) {
+                Log.e(TAG, "onSuccess: "+result );
+            }
+
+            @Override
+            public void onFailure(String error) {
+                Log.e(TAG, "onFailure: "+error );
+
+            }
+
+            @Override
+            public void onNetworkFailure() {
+
+            }
+        });
+    }
+
+
 
     private void volley(){
         // Restful API - default timeout 30000
@@ -147,23 +168,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void androidLocationAPI(){
-        final RediAndroidLocationAPI androidLocationAPI = new RediAndroidLocationAPI(this);
-        androidLocationAPI.startLocation(new RediView.OnLocationListener() {
+        RediAndroidLocationAPI androidLocationAPI = new RediAndroidLocationAPI(this, new RediView.OnLocationListener() {
             @Override
             public void onStart() {
                 Log.e(TAG, "onStart: Start location" );
-
             }
 
             @Override
             public void onSuccess(double latitude, double longitude) {
                 Log.e(TAG, "onSuccess: im here : " + latitude + ":" + longitude);
-
             }
 
             @Override
             public void onFailure(String error) {
-
+                Log.e(TAG, "onFailure: "+error );
             }
 
             @Override

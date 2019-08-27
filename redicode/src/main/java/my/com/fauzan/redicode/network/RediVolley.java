@@ -30,7 +30,7 @@ public class RediVolley {
     private String url;
     private JSONObject jsonObjectReq;
     private int timeout = 30000;
-    public final String TAG = RediVolley.class.getSimpleName();
+    private final String TAG = RediVolley.class.getSimpleName();
 
     public RediVolley(Context c, String url) {
         this.context = c;
