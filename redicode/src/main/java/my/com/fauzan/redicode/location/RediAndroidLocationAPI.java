@@ -90,7 +90,7 @@ public class RediAndroidLocationAPI implements LocationListener{
             onLocationListener.onFailure("Location not found");
 
         // Stop location update
-        locationManager.removeUpdates((LocationListener) context);
+        locationManager.removeUpdates(this);
         handler.removeCallbacks(runnable);
     }
 
