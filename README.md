@@ -26,7 +26,7 @@ allprojects {
 
 ```
 dependencies {
-	implementation 'com.gitlab.MuhdFauzan:redicode:vv2.0.3'
+	implementation 'com.gitlab.MuhdFauzan:redicode:v2.0.3'
 }
 ```
 
