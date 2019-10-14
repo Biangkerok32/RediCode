@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         Log.e(TAG, "Device Imei: "+ rediDeviceInfo.getDeviceIMEI() );
         Log.e(TAG, "Device ID: "+ rediDeviceInfo.getDeviceID() );
 
-        test();
+        // test();
 
     }
     private void test(){

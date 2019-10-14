@@ -1,2 +1,18 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="my.com.fauzan.redicode" />
+    package="my.com.fauzan.redicode" >
+
+    <!--Location permission-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!--ZXing permission-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+
+
+
+</manifest>
