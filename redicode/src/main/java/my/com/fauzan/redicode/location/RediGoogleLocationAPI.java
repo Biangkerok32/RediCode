@@ -165,7 +165,7 @@ public class RediGoogleLocationAPI {
                     .addOnCompleteListener((Activity) context, new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Log.e(TAG, "Location update stopped!");
+                            Log.d(TAG, "Location update stopped!");
                         }
                     });
         }
