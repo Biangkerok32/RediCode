@@ -19,7 +19,7 @@ android {
 //            buildConfigField 'int', "UAT_Port", UAT_PORT// use in code
 //            buildConfigField 'String', "PROD_Address", PROD_ADDRESS  // use in code
 //            buildConfigField 'int', "PROD_Port", PROD_PORT// use in code
-//            buildConfigField 'String', "Request", UAT_REQUEST // use in code
+            buildConfigField 'String', "Request", REQUEST // use in code
             resValue 'string', "api_key", UAT_ADDRESS // use in xml
         }
         release {
