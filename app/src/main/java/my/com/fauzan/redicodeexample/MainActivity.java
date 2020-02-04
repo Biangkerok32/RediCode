@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private void ssl(){
         // SSL Socket with default timeout - 30000;
         // Cert file must be in Raw Folder
-        RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.PROD_Address, BuildConfig.PROD_Port, "emonei_prod.crt", true);
+        // RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.PROD_Address, BuildConfig.PROD_Port, "emonei_prod.crt", true);
         // RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.UAT_Address, BuildConfig.UAT_Port, "emonei_uat.cer");
         RediSSLSocketClient.setOnResponseListener(BuildConfig.Request, new RediView.OnByteResponseListener() {
             @Override
