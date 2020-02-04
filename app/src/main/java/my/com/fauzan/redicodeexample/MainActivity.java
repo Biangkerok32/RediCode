@@ -5,10 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import my.com.fauzan.redicode.device_info.RediDeviceInfo;
 import my.com.fauzan.redicode.location.RediGoogleLocationAPI;
 import my.com.fauzan.redicode.location.RediAndroidLocationAPI;
 import my.com.fauzan.redicode.network.RediVolley;
@@ -25,16 +21,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        androidLocationAPI();
+ //       androidLocationAPI();
 
         // get serial no
-        RediDeviceInfo rediDeviceInfo = new RediDeviceInfo(this);
-        Log.e(TAG, "Serial No: " + rediDeviceInfo.getSerialNo() );
-        Log.e(TAG, "Mac Address: "+ rediDeviceInfo.getMacAddress() );
-        Log.e(TAG, "Device Imei: "+ rediDeviceInfo.getDeviceIMEI() );
-        Log.e(TAG, "Device ID: "+ rediDeviceInfo.getDeviceID() );
+//        RediDeviceInfo rediDeviceInfo = new RediDeviceInfo(this);
+//        Log.e(TAG, "Serial No: " + rediDeviceInfo.getSerialNo() );
+//        Log.e(TAG, "Mac Address: "+ rediDeviceInfo.getMacAddress() );
+//        Log.e(TAG, "Device Imei: "+ rediDeviceInfo.getDeviceIMEI() );
+//        Log.e(TAG, "Device ID: "+ rediDeviceInfo.getDeviceID() );
 
-        // test();
+
+        ssl();
 
     }
     private void test(){
@@ -108,7 +105,8 @@ public class MainActivity extends AppCompatActivity {
     private void ssl(){
         // SSL Socket with default timeout - 30000;
         // Cert file must be in Raw Folder
-        RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.Address, BuildConfig.Port, R.raw.certificate);
+        RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.PROD_Address, BuildConfig.PROD_Port, "emonei_prod.crt", true);
+        // RediSSLSocketClient.getInstance(this).initSSL(BuildConfig.UAT_Address, BuildConfig.UAT_Port, "emonei_uat.cer");
         RediSSLSocketClient.setOnResponseListener(BuildConfig.Request, new RediView.OnByteResponseListener() {
             @Override
             public void onStart() {

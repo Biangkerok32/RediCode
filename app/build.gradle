@@ -15,8 +15,10 @@ android {
             it.buildConfigField 'String', 'THE_MOVIE_DB_API_TOKEN', UAT_ADDRESS
         }
         debug {
-            buildConfigField 'String', "Address", UAT_ADDRESS  // use in code
-            buildConfigField 'int', "Port", UAT_PORT// use in code
+            buildConfigField 'String', "UAT_Address", UAT_ADDRESS  // use in code
+            buildConfigField 'int', "UAT_Port", UAT_PORT// use in code
+            buildConfigField 'String', "PROD_Address", PROD_ADDRESS  // use in code
+            buildConfigField 'int', "PROD_Port", PROD_PORT// use in code
             buildConfigField 'String', "Request", UAT_REQUEST // use in code
             resValue 'string', "api_key", UAT_ADDRESS // use in xml
         }

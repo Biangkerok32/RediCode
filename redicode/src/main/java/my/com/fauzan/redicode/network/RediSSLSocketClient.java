@@ -41,9 +41,10 @@ public class RediSSLSocketClient {
 
     private Context context;
     private RediView.OnByteResponseListener onByteResponseListener;
-    private int certFile;
+    private String certFileName;
     private SSLAsyncTask sslAsyncTask;
     private static RediSSLSocketClient mInstance;
+    private Boolean trustAllCerts = false;
 
     public static synchronized RediSSLSocketClient getInstance(Context context) {
 
@@ -53,30 +54,46 @@ public class RediSSLSocketClient {
         return mInstance;
     }
 
-    private RediSSLSocketClient(Context context){
+    private RediSSLSocketClient(Context context) {
         this.context = context;
     }
 
-    public void initSSL(String dstAddress, int dstPort, int certFile){
+    public void initSSL(String dstAddress, int dstPort, String certFileName) {
         this.dstAddress = dstAddress;
         this.dstPort = dstPort;
-        this.certFile = certFile;
+        this.certFileName = certFileName;
     }
 
-    public void initSSL(String dstAddress, int dstPort, int certFile, int timeout) {
+    public void initSSL(String dstAddress, int dstPort, String certFileName, int timeout) {
         this.dstAddress = dstAddress;
         this.dstPort = dstPort;
-        this.certFile = certFile;
+        this.certFileName = certFileName;
         this.timeout = timeout;
     }
 
+    public void initSSL(String dstAddress, int dstPort, String certFileName, int timeout, Boolean trustAllCerts) {
+        this.dstAddress = dstAddress;
+        this.dstPort = dstPort;
+        this.certFileName = certFileName;
+        this.timeout = timeout;
+        this.trustAllCerts = trustAllCerts;
+    }
 
-    public static void setOnResponseListener(String request, RediView.OnByteResponseListener onByteResponseListener){
+    public void initSSL(String dstAddress, int dstPort, String certFileName, Boolean trustAllCerts) {
+        this.dstAddress = dstAddress;
+        this.dstPort = dstPort;
+        this.certFileName = certFileName;
+        this.timeout = timeout;
+        this.trustAllCerts = trustAllCerts;
+    }
+
+
+    public static void setOnResponseListener(String request, RediView.OnByteResponseListener onByteResponseListener) {
         mInstance.onByteResponseListener = onByteResponseListener;
         mInstance.sslAsyncTask = (SSLAsyncTask) new SSLAsyncTask().execute(request);
     }
 
-    public static void cancelRequest(){
+    public static void cancelRequest() {
         if (mInstance.sslAsyncTask != null && mInstance.sslAsyncTask.getStatus() != AsyncTask.Status.FINISHED)
             mInstance.sslAsyncTask.cancel(true);
     }
@@ -103,7 +120,7 @@ public class RediSSLSocketClient {
                 // SSLConnection CAs from an InputStream
                 CertificateFactory cf;
                 cf = CertificateFactory.getInstance("X.509");
-                InputStream caInput = mInstance.context.getResources().openRawResource(mInstance.certFile);
+                InputStream caInput = mInstance.context.getAssets().open(mInstance.certFileName);
                 Certificate ca;
                 try {
                     ca = cf.generateCertificate(caInput);
@@ -127,9 +144,12 @@ public class RediSSLSocketClient {
                 tmf.init(keyStore);
 
                 // Create an SSLContext that uses our TrustManager
-                final SSLContext context = SSLContext.getInstance("TLS");
-                context.init(null, tmf.getTrustManagers(), null);
-
+                final SSLContext context = SslUtils.getSslContextForCertificateFile(mInstance.context, mInstance.certFileName);
+                if (mInstance.trustAllCerts) {
+                    context.init(null, SslUtils.trustAllCerts, null);
+                } else {
+                    context.init(null, tmf.getTrustManagers(), null);
+                }
                 try {
 
                     SSLSocketFactory sslsocketfactory = context.getSocketFactory();
